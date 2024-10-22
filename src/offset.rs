@@ -1,4 +1,4 @@
-use super::*;
+use super::{Edge, EdgeError};
 use geo_clipper::Clipper;
 use geo_types::CoordFloat;
 
@@ -31,7 +31,7 @@ impl<F: CoordFloat> Offset<F> for geo_types::GeometryCollection<F> {
         arc_segments: u32,
     ) -> Result<geo_types::MultiPolygon<F>, OffsetError> {
         let mut geometry_collection_with_offset = geo_types::MultiPolygon::<F>(Vec::new());
-        for geometry in self.0.iter() {
+        for geometry in &self.0 {
             let geometry_with_offset = geometry.offset_with_arc_segments(distance, arc_segments)?;
             geometry_collection_with_offset = geometry_collection_with_offset
                 .union(&geometry_with_offset, F::from(1000.0).unwrap());
@@ -53,8 +53,8 @@ impl<F: CoordFloat> Offset<F> for geo_types::Geometry<F> {
             geo_types::Geometry::Line(line) => {
                 line.offset_with_arc_segments(distance, arc_segments)
             }
-            geo_types::Geometry::LineString(line_tring) => {
-                line_tring.offset_with_arc_segments(distance, arc_segments)
+            geo_types::Geometry::LineString(line_string) => {
+                line_string.offset_with_arc_segments(distance, arc_segments)
             }
             geo_types::Geometry::Triangle(triangle) => triangle
                 .to_polygon()
@@ -88,7 +88,7 @@ impl<F: CoordFloat> Offset<F> for geo_types::MultiPolygon<F> {
         arc_segments: u32,
     ) -> Result<geo_types::MultiPolygon<F>, OffsetError> {
         let mut polygons = geo_types::MultiPolygon::<F>(Vec::new());
-        for polygon in self.0.iter() {
+        for polygon in &self.0 {
             let polygon_with_offset = polygon.offset_with_arc_segments(distance, arc_segments)?;
             polygons = polygons.union(&polygon_with_offset, F::from(1000.0).unwrap());
         }
@@ -129,7 +129,7 @@ impl<F: CoordFloat> Offset<F> for geo_types::MultiLineString<F> {
         }
 
         let mut multi_line_string_with_offset = geo_types::MultiPolygon::<F>(Vec::new());
-        for line_string in self.0.iter() {
+        for line_string in &self.0 {
             let line_string_with_offset =
                 line_string.offset_with_arc_segments(distance, arc_segments)?;
             multi_line_string_with_offset = multi_line_string_with_offset
@@ -160,7 +160,7 @@ impl<F: CoordFloat> Offset<F> for geo_types::LineString<F> {
             geo_types::MultiPolygon::<F>(
                 line_string_with_offset
                     .0
-                    .get(0)
+                    .first()
                     .map(|polygon| vec![polygon.clone()])
                     .unwrap_or_default(),
             ),
@@ -229,7 +229,7 @@ impl<F: CoordFloat> Offset<F> for geo_types::MultiPoint<F> {
         }
 
         let mut multi_point_with_offset = geo_types::MultiPolygon::<F>(Vec::new());
-        for point in self.0.iter() {
+        for point in &self.0 {
             let point_with_offset = point.offset_with_arc_segments(distance, arc_segments)?;
             multi_point_with_offset =
                 multi_point_with_offset.union(&point_with_offset, F::from(1000.0).unwrap());
