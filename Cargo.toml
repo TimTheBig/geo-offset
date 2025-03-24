@@ -8,13 +8,13 @@ readme = "README.md"
 repository = "https://github.com/lelongg/geo-offset"
 documentation = "https://docs.rs/geo-offset/"
 description = "Add margin and padding to geometric shapes"
-keywords = ["geo", "polygon", "offset", "margin", "padding", "3d"]
+keywords = ["geo", "polygon", "offset", "margin", "padding"]
 categories = ["algorithms"]
 
 [dependencies]
 geo-types = "0.7"
 itertools = "0.14"
-geo-clipper = "0.8"
+geo-clipper = "0.9"
 num-traits = "0.2.19"
 
 [dev-dependencies]
