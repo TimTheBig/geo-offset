@@ -1,7 +1,7 @@
 [package]
 name = "geo-offset"
 version = "0.3.2"
-authors = ["Gérald Lelong <gerald.lelong@easymov.fr>", "TimTheBig"]
+authors = ["Gérald Lelong <gerald.lelong@easymov.fr>"]
 edition = "2021"
 license = "ISC"
 readme = "README.md"
@@ -13,7 +13,7 @@ categories = ["algorithms"]
 
 [dependencies]
 geo-types = "0.7"
-itertools = "0.13"
+itertools = "0.14"
 geo-clipper = "0.8"
 num-traits = "0.2.19"
 
