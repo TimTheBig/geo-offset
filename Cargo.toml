@@ -1,6 +1,6 @@
 [package]
 name = "geo-offset"
-version = "0.3.2"
+version = "0.4.1"
 authors = ["Gérald Lelong <gerald.lelong@easymov.fr>"]
 edition = "2021"
 license = "ISC"
@@ -22,5 +22,5 @@ serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 once_cell = "1.7"
 data-uri-utils = "0.2"
-geo-svg = "0.6"
+geo-svg = "0.7"
 geo-types = "0.7"
